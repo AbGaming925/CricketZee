@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CricketZee Scoreboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header,
+        footer {
+            background-color: #222;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 10px 0;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+            cursor: pointer;
+        }
+
+        main {
+            width: 100%;
+            padding: 20px;
+            background-color: white;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .match-summary {
+            width: 100%;
+            background-color: #eee;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .match-info {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 900px;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 900px;
+            margin-top: 15px;
+        }
+
+        .tabs fieldset {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            border: 2px solid #ccc;
+            margin: 5px;
+            cursor: pointer;
+            background-color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .tabs fieldset:hover {
+            background-color: #f0f0f0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fafafa;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #ddd;
+        }
+
+        .team-head {
+            display: flex;
+            justify-content: space-between;
+            font-size: 22px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .extras,
+        .fall-of-wickets {
+            margin: 10px 0;
+            white-space: pre-line;
+            background: #f0f0f0;
+            padding: 10px;
+        }
+
+        .key-info {
+            padding: 10px;
+            background: #eee;
+            width: 100%;
+            max-width: 300px;
+            margin: 20px auto;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        /* Mobile View */
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+
+            .tabs fieldset {
+                margin: 5px 0;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            .match-info {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h2>CricketZee</h2>
+        <nav>
+            <ul>
+                <li>Home</li>
+                <li>Today's Matches</li>
+                <li>Live</li>
+                <li>Scoreboard</li>
+                <li>About Us</li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Cricket World Cup</h1>
+
+        <section class="match-summary">
+            <div class="match-info">
+                <img src="new_zealand.png" width="50px" alt="NZ Logo" />
+                <span>238/8 (50)</span>
+                <span>vs</span>
+                <span>221 (49.3)</span>
+                <img src="india.png" width="50px" alt="India Logo" />
+            </div>
+            <p style="font-size: 18px; font-weight: bold;">NZ won by 18 runs</p>
+            <p>Semi-final ODI 46 of 48 — 9 Jul 2019</p>
+
+            <div class="tabs">
+                <fieldset onclick="showTab('india')">India</fieldset>
+                <fieldset onclick="showTab('newzealand')">New Zealand</fieldset>
+                <fieldset onclick="showTab('overview')">Overview</fieldset>
+                <fieldset onclick="showTab('commentary')">Commentary</fieldset>
+                <fieldset onclick="showTab('stats')">Stats</fieldset>
+                <fieldset onclick="showTab('morematches')">More Matches</fieldset>
+            </div>
+        </section>
+
+        <div id="india" class="tab-content">
+            <div class="team-head">
+                <span>India</span>
+                <span>New Zealand</span>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Batting</th>
+                        <th>R</th>
+                        <th>B</th>
+                        <th>4s</th>
+                        <th>6s</th>
+                        <th>S/R</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>KL Rahul<br>c Tom Latham b Matt Henry</td>
+                        <td>1</td>
+                        <td>7</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>14.29</td>
+                    </tr>
+                    <tr>
+                        <td>R. Sharma<br>c Tom Latham b Matt Henry</td>
+                        <td>1</td>
+                        <td>4</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>25.00</td>
+                    </tr>
+                    <tr>
+                        <td>V. Kohli (C)<br>lbw Trent Boult</td>
+                        <td>1</td>
+                        <td>6</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>16.67</td>
+                    </tr>
+                    <tr>
+                        <td>R. Pant<br>c Colin de Grandhomme b Mitchell Santner</td>
+                        <td>32</td>
+                        <td>56</td>
+                        <td>4</td>
+                        <td>0</td>
+                        <td>57.14</td>
+                    </tr>
+                    <tr>
+                        <td>D. Karthik<br>c James Neesham b Matt Henry</td>
+                        <td>6</td>
+                        <td>25</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>24.00</td>
+                    </tr>
+                    <tr>
+                        <td>H. Pandya<br>c Kane Williamson b Mitchell Santner</td>
+                        <td>32</td>
+                        <td>62</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>51.61</td>
+                    </tr>
+                    <tr>
+                        <td>MS Dhoni (Wk)<br>run out (Martin Guptill)</td>
+                        <td>50</td>
+                        <td>72</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>69.44</td>
+                    </tr>
+                    <tr>
+                        <td>R. Jadeja<br>c Kane Williamson b Trent Boult</td>
+                        <td>77</td>
+                        <td>59</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>130.51</td>
+                    </tr>
+                    <tr>
+                        <td>B. Kumar<br>b Lockie Ferguson</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0.00</td>
+                    </tr>
+                    <tr>
+                        <td>Y. Chahal<br>c Tom Latham b James Neesham</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>100.00</td>
+                    </tr>
+                    <tr>
+                        <td>J. Bumrah<br>not out</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="extras">
+                <strong>Extras:</strong> 16 (W 13, LB 3)
+            </div>
+            <div class="fall-of-wickets">
+                <strong>Total runs:</strong> 221 (10 wkts, 49.3 ov)
+                <strong>Fall of wickets:</strong> 
+                4/1 (R. Sharma, 1.3 ov), 5/2 (V. Kohli, 2.4 ov), 5/3 (KL Rahul, 3.1 ov), 24/4 (D. Karthik, 9.6 ov),
+                71/5 (R. Pant, 22.5 ov), 92/6 (H. Pandya, 30.3 ov), 208/7 (R. Jadeja, 47.5 ov), 216/8 (MS Dhoni, 48.3 ov), 217/9 (B. Kumar, 48.6 ov), 221/10 (Y. Chahal, 49.3 ov).
+            </div>
+            <div class="bowling">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bowler</th>
+                            <th>O</th>
+                            <th>M</th>
+                            <th>R</th>
+                            <th>W</th>
+                            <th>Econ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>T. Boult</td>
+                            <td>10.0</td>
+                            <td>2</td>
+                            <td>42</td>
+                            <td>2</td>
+                            <td>4.20</td>
+                        </tr>
+                        <tr>
+                            <td>M. Henry</td>
+                            <td>10.0</td>
+                            <td>1</td>
+                            <td>37</td>
+                            <td>3</td>
+                            <td>3.70</td>
+                        </tr>
+                        <tr>
+                            <td>L. Ferguson</td>
+                            <td>10.0</td>
+                            <td>0</td>
+                            <td>43</td>
+                            <td>1</td>
+                            <td>4.30</td>
+                        </tr>
+                        <tr>
+                            <td>C. de Grandhomme</td>
+                            <td>2.0</td>
+                            <td>0</td>
+                            <td>13</td>
+                            <td>0</td>
+                            <td>6.50</td>
+                        </tr>
+                        <tr>
+                            <td>J. Neesham</td>
+                            <td>7.3</td>
+                            <td>0</td>
+                            <td>49</td>
+                            <td>1</td>
+                            <td>6.53</td>
+                        </tr>
+                        <tr>
+                            <td>M. Santner</td>
+                            <td>10.0</td>
+                            <td>2</td>
+                            <td>34</td>
+                            <td>2</td>
+                            <td>3.40</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="newzealand" class="tab-content hidden">
+            <div class="team-head">
+                <span>New Zealand</span>
+                <span>India</span>
+            </div>
+
+            <!-- New Zealand Batting Table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Batting</th>
+                        <th>R</th>
+                        <th>B</th>
+                        <th>4s</th>
+                        <th>6s</th>
+                        <th>S/R</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>M. Guptill <br>c Virat Kohli b Jasprit Bumrah</td>
+                        <td>1</td>
+                        <td>14</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>7.14</td>
+                    </tr>
+                    <tr>
+                        <td>H. Nicholls <br>b Ravindra Jadeja</td>
+                        <td>28</td>
+                        <td>51</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>54.90</td>
+                    </tr>
+                    <tr>
+                        <td>Kane Williamson <br>c Ravindra Jadeja b Yuzvendra Chahal</td>
+                        <td>67</td>
+                        <td>95</td>
+                        <td>6</td>
+                        <td>0</td>
+                        <td>70.53</td>
+                    </tr>
+                    <tr>
+                        <td>R. Taylor <br>run out Ravindra Jadeja</td>
+                        <td>74</td>
+                        <td>90</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>82.22</td>
+                    </tr>
+                    <tr>
+                        <td>J. Neesham <br>c Dinesh Karthik b Hardik Pandya</td>
+                        <td>12</td>
+                        <td>18</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>66.67</td>
+                    </tr>
+                    <tr>
+                        <td>C. de Grandhomme <br>c MS Dhoni b Bhuvneshwar Kumar</td>
+                        <td>16</td>
+                        <td>10</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>160.00</td>
+                    </tr>
+                    <tr>
+                        <td>T. Latham <br>c Ravindra Jadeja b Bhuvneshwar Kumar</td>
+                        <td>10</td>
+                        <td>11</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>90.91</td>
+                    </tr>
+                    <tr>
+                        <td>M. Santner <br>not out</td>
+                        <td>9</td>
+                        <td>6</td>
+                        <td>1</td>
+                        <td>0</td>
+                        <td>150.00</td>
+                    </tr>
+                    <tr>
+                        <td>M. Henry <br>c Virat Kohli b Bhuvneshwar Kumar</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>50.00</td>
+                    </tr>
+                    <tr>
+                        <td>T. Boult <br>not out</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>100.00</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="extras">
+                <strong>Extras:</strong> 18 (W 13, LB 5)
+            </div>
+            <div class="fall-of-wickets">
+                <strong>Total:</strong> 239 (8 wkts, 50 ov)
+                <strong>Fall of wickets:</strong>
+                1/1 (M. Guptill, 53.3 ov), 69/2 (H. Nicholls, 18.2 ov), 134/3 (K. Williamson, 35.2
+                ov), 162/4 (J. Neesham, 40.6 ov), 200/5 (C. de Grandhomme, 44.4 ov), 225/6 (R. Taylor, 47.6 ov), 225/7 (T. Latham, 48.1 ov), 232/8 (M. Henry, 48.6 ov).
+            </div>
+
+            <!-- India Bowling Table -->
+            <div class="bowling">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bowler</th>
+                            <th>O</th>
+                            <th>M</th>
+                            <th>R</th>
+                            <th>W</th>
+                            <th>Econ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>B. Kumar</td>
+                            <td>10.0</td>
+                            <td>1</td>
+                            <td>43</td>
+                            <td>3</td>
+                            <td>4.30</td>
+                        </tr>
+                        <tr>
+                            <td>J. Bumrah</td>
+                            <td>10.0</td>
+                            <td>1</td>
+                            <td>39</td>
+                            <td>1</td>
+                            <td>3.90</td>
+                        </tr>
+                        <tr>
+                            <td>H. Pandya</td>
+                            <td>10.0</td>
+                            <td>0</td>
+                            <td>55</td>
+                            <td>1</td>
+                            <td>5.50</td>
+                        </tr>
+                        <tr>
+                            <td>R. Jadeja</td>
+                            <td>10.0</td>
+                            <td>0</td>
+                            <td>34</td>
+                            <td>1</td>
+                            <td>3.40</td>
+                        </tr>
+                        <tr>
+                            <td>Y. Chahal</td>
+                            <td>10.0</td>
+                            <td>0</td>
+                            <td>63</td>
+                            <td>1</td>
+                            <td>6.30</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="overview" class="tab-content hidden">Toss: NZ won toss and decided to bat <br>Venue: <a href="https://www.google.com/search?client=ms-android-oppo-rev1&sa=X&sca_esv=49afd0a4949993fa&biw=423&bih=828&sxsrf=AHTn8zqz9gZYGLAt5zTXRff_ElZGeoLjpQ:1744727922717&q=Old+Trafford+Cricket+Ground&stick=H4sIAAAAAAAAAONgVuLUz9U3MDbIKUx_xGjCLfDyxz1hKe1Ja05eY1Tl4grOyC93zSvJLKkUEudig7J4pbi5ELp4FrFK--ekKIQUJaal5RelKDgXZSZnp5YouBfll-alAABSyFi1YgAAAA&ved=2ahUKEwitrsCAotqMAxXP4jgGHSjNKZcQhfgMegQIJRAM#ebo=0 ">Old Trafford Cricket Ground</a> <br>Timezone: All times are in India Standard Time</div>
+        <div id="commentary" class="tab-content hidden">Commentary will show during match</div>
+        <div id="stats" class="tab-content hidden">Stats will show during match</div>
+        <div id="morematches" class="tab-content hidden">More Matche updates will be shown here</div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 CricketZee. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showTab(tabName) {
+            var allTabs = document.querySelectorAll('.tab-content');
+            allTabs.forEach(function (tab) {
+                tab.classList.add('hidden');
+            });
+
+            var activeTab = document.getElementById(tabName);
+            if (activeTab) {
+                activeTab.classList.remove('hidden');
+            }
+        }
+    </script>
+
+</body>
+
+</html>
